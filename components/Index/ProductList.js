@@ -16,4 +16,5 @@ function ProductList({ products }) {
   return <Card.Group stackable items={mapProductsToItems(products)} itemsPerRow='3' centered />
 }
 
+
 export default ProductList;
