@@ -9,10 +9,14 @@ const INITIAL_PRODUCT = {
   description: ''
 }
 
+import axios from 'axios';
+import baseUrl from '../utils/baseUrl'
+
 function CreateProduct() {
   const [product, setProduct] = React.useState(INITIAL_PRODUCT);
   const [mediaPreview, setMediaPreview] = React.useState('');
   const [success, setSuccess] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   function handleChange(event) {
     const { name, value, files } = event.target;
@@ -25,10 +29,35 @@ function CreateProduct() {
 
   }
 
-  function handleSubmit(event) {
+
+
+  async function hendleImageUpload() {
+    const data = new FormData()
+    data.append('file', product.media)
+    data.append('upload_preset', 'reactreserve')
+    data.append('cloud_name', 'dalfzwoaq')
+    const response = await axios.post(process.env.ClOUDINARY_URL, data)
+    const mediaUrl = response.data.url
+    return mediaUrl;
+  }
+
+
+
+  async function handleSubmit(event) {
     event.preventDefault();
+    setLoading(true)
+    const mediaUrl = await hendleImageUpload()
+    const url = `${baseUrl}/api/product`
+    const { name, price, description } = product
+    const payload = {
+      name, price, description,
+      mediaUrl
+    }
+    const response = await axios.post(url, payload);
+    console.log({ response })
+    setLoading(false)
     setProduct(INITIAL_PRODUCT)
-    setSuccess(true)
+    setSuccess(true);
   }
 
 
@@ -38,7 +67,7 @@ function CreateProduct() {
         <Icon name='add' color='orange' />
         CreateNew Product
       </Header>
-      <Form success={success} onSubmit={handleSubmit}  >
+      <Form loading={loading} success={success} onSubmit={handleSubmit}  >
         <Message
           success
           icon='check'
@@ -87,7 +116,7 @@ function CreateProduct() {
           onChange={handleChange}
           value={product.description}
         />
-        <Form.Field control={Button} color='blue' icon='pencil alternate' content='Submit' type='submit' />
+        <Form.Field control={Button} disabled={loading} color='blue' icon='pencil alternate' content='Submit' type='submit' />
       </Form>
     </>
   )

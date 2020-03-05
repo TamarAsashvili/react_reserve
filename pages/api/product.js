@@ -1,9 +1,16 @@
 import Product from '../../models/Product';
+import connectDB from '../../utils/connectDb'
+
+connectDB();
 
 export default async (req, res) => {
     switch (req.method) {
         case "GET":
             await handleGetRequest(req, res);
+            break;
+
+        case "POST":
+            await handlePostRequest(req, res);
             break;
         case "DELETE":
             await handleDeleteRequest(req, res);
@@ -13,6 +20,23 @@ export default async (req, res) => {
             break;
     }
 }
+
+
+async function handlePostRequest(req, res) {
+    const { name, price, mediaUrl, description } = req.body
+    if (!name || !description || !price || !mediaUrl) {
+        return res.status(422).send('product missing one or moor fields')
+    }
+    const product = await new Product({
+        name,
+        price,
+        description,
+        mediaUrl
+    }).save()
+
+    res.status(201).json(product)
+}
+
 
 async function handleGetRequest(req, res) {
     const { _id } = req.query;
