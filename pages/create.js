@@ -17,6 +17,7 @@ function CreateProduct() {
   const [mediaPreview, setMediaPreview] = React.useState('');
   const [success, setSuccess] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [disabled, setDisabled] = React.useState(true);
 
   function handleChange(event) {
     const { name, value, files } = event.target;
@@ -36,7 +37,8 @@ function CreateProduct() {
     data.append('file', product.media)
     data.append('upload_preset', 'reactreserve')
     data.append('cloud_name', 'dalfzwoaq')
-    const response = await axios.post(process.env.ClOUDINARY_URL, data)
+    const response = await axios.post
+      (process.env.CLOUDINARY_URL, data)
     const mediaUrl = response.data.url
     return mediaUrl;
   }
@@ -47,12 +49,10 @@ function CreateProduct() {
     event.preventDefault();
     setLoading(true)
     const mediaUrl = await hendleImageUpload()
+    console.log({ mediaUrl })
     const url = `${baseUrl}/api/product`
     const { name, price, description } = product
-    const payload = {
-      name, price, description,
-      mediaUrl
-    }
+    const payload = { name, price, description, mediaUrl };
     const response = await axios.post(url, payload);
     console.log({ response })
     setLoading(false)
@@ -116,7 +116,13 @@ function CreateProduct() {
           onChange={handleChange}
           value={product.description}
         />
-        <Form.Field control={Button} disabled={loading} color='blue' icon='pencil alternate' content='Submit' type='submit' />
+        <Form.Field
+          control={Button}
+          disabled={disabled || loading}
+          color='blue'
+          icon='pencil alternate'
+          content='Submit'
+          type='submit' />
       </Form>
     </>
   )
