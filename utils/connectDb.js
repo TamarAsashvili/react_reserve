@@ -1,8 +1,6 @@
 import mongoose from 'mongoose'
 
-const connection = {
-
-}
+const connection = {}
 
 async function connectDb() {
     if (connection.isConnected) {
@@ -17,7 +15,7 @@ async function connectDb() {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
-    console.log('db it is connected');
+    console.log('db  is connected');
     connection.isConnected = db.connections[0].readyState;
 }
 

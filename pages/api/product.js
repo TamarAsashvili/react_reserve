@@ -32,17 +32,24 @@ async function handleGetRequest(req, res) {
 
 
 async function handlePostRequest(req, res) {
-    const { name, price, mediaUrl, description } = req.body
-    if (!name || !description || !price || !mediaUrl) {
-        return res.status(422).send('product missing one or moor fields')
+    const { name, price, mediaUrl, description } = req.body;
+    try {
+        if (!name || !description || !price || !mediaUrl) {
+            return res.status(422).send('product missing one or moor fields')
+        }
+        const product = await new Product({
+            name,
+            price,
+            description,
+            mediaUrl
+        }).save();
+        res.status(201).json(product);
     }
-    const product = await new Product({
-        name,
-        price,
-        description,
-        mediaUrl
-    }).save()
-    res.status(201).json(product)
+    catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error in creating product')
+    }
+
 }
 
 async function handleDeleteRequest(req, res) {
