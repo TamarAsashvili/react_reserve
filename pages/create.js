@@ -40,7 +40,7 @@ function CreateProduct() {
 
 
 
-  async function hendleImageUpload() {
+  async function handleImageUpload() {
     const data = new FormData()
     data.append('file', product.media)
     data.append('upload_preset', 'reactreserve')
@@ -56,14 +56,14 @@ function CreateProduct() {
   async function handleSubmit(event) {
     try {
       event.preventDefault();
-      setLoading(true)
-      const mediaUrl = await hendleImageUpload()
-      console.log({ mediaUrl })
+      setLoading(true);
+      setError('');
+      const mediaUrl = await handleImageUpload()
       const url = `${baseUrl}/api/product`
-      const { name, price, description } = product
+      const { name, price, description } = product;
       const payload = { name, price, description, mediaUrl };
       const response = await axios.post(url, payload);
-      console.log({ response })
+      console.log({ response });
       setProduct(INITIAL_PRODUCT)
       setSuccess(true);
     } catch (error) {
@@ -80,7 +80,7 @@ function CreateProduct() {
     <>
       <Header as='h2' block>
         <Icon name='add' color='orange' />
-        CreateNew Product
+        Create New Product
       </Header>
       <Form loading={loading} error={Boolean(error)} success={success} onSubmit={handleSubmit}  >
         <Message
@@ -128,7 +128,7 @@ function CreateProduct() {
           />
 
         </Form.Group>
-        <Image src={mediaPreview} rounded centered size='medium' />
+        <Image src={mediaPreview} rounded centered size='small' />
         <Form.Field
           control={TextArea}
           name='description'

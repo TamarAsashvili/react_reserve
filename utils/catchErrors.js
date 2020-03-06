@@ -11,9 +11,9 @@ function catchErrors(error, displayError) {
         errorMsg = error.request;
         console.error("error request", errorMsg)
     } else {
-        //something else heppend
+        //something else heppend in making request
         errorMsg = error.message;
-        console.error("err message", errorMsg)
+        console.error("error message", errorMsg)
     }
 
     displayError(errorMsg)

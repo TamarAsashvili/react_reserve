@@ -34,7 +34,7 @@ async function handleGetRequest(req, res) {
 async function handlePostRequest(req, res) {
     const { name, price, mediaUrl, description } = req.body;
     try {
-        if (!name || !description || !price || !mediaUrl) {
+        if (!name || !price || !description || !mediaUrl) {
             return res.status(422).send('product missing one or moor fields')
         }
         const product = await new Product({
@@ -44,8 +44,7 @@ async function handlePostRequest(req, res) {
             mediaUrl
         }).save();
         res.status(201).json(product);
-    }
-    catch (error) {
+    } catch (error) {
         console.error(error);
         res.status(500).send('Server Error in creating product')
     }
