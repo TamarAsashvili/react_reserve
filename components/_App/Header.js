@@ -9,9 +9,9 @@ Router.onRouteChangeComplete = () => NProgress.done();
 Router.onRouteChangeError = () => NProgress.done();
 
 
-function Header() {
+function Header({ user }) {
   const router = useRouter();
-  const user = false;
+  console.log(user)
 
   function isActive(route) {
     return route === router.pathname;
@@ -48,20 +48,20 @@ function Header() {
             <Icon name='sign out' size='large' />Logout
           </Menu.Item>
 
-        </>)
-          :
-          (<>
-            <Link href='/login'>
-              <Menu.Item header active={isActive('/login')}>
-                <Icon name='sign in' size='large' />Log in
+        </>
+        ) : (
+            <>
+              <Link href='/login'>
+                <Menu.Item header active={isActive('/login')}>
+                  <Icon name='sign in' size='large' />Log in
           </Menu.Item>
-            </Link>
-            <Link href='/signup'>
-              <Menu.Item header active={isActive('/signup')}>
-                <Icon name='signup' size='large' />Singup
+              </Link>
+              <Link href='/signup'>
+                <Menu.Item header active={isActive('/signup')}>
+                  <Icon name='signup' size='large' />Singup
           </Menu.Item>
-            </Link>
-          </>)}
+              </Link>
+            </>)}
       </Container>
     </Menu>
   )
