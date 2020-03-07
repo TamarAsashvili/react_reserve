@@ -15,3 +15,11 @@ export function redirectUser(ctx, location) {
         Router.push(location)
     }
 }
+
+
+export function handleLogout() {
+    cookie.remove('token');
+    //it makes if you sign out user A from one browser to heppend same to another sign out  user A
+    window.localStorage.setItem('logout', Date.now())
+    Router.push('/login');
+}
