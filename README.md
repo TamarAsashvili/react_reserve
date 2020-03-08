@@ -1,5 +1,5 @@
 
-##Universal React with Next.js 
+## Universal React with Next.js 
 
 ## MERN Stack the complete guide
 
