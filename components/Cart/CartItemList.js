@@ -30,7 +30,7 @@ function CartItemList({ products, user, handleRemoveFromCart, success }) {
     return (
       <Message
         success
-        header="Success"
+        header="Success !"
         content="your order and payment has been accepted"
         icon="star outline"
       />

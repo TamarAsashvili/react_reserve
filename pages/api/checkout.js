@@ -1,8 +1,8 @@
-import Stripe from 'stripe'
-import uuidv4 from 'uuid/v4'
-import jwt from 'jsonwebtoken'
-import Cart from '../../models/Cart'
-import Order from '../../models/Order'
+import Stripe from 'stripe';
+import uuidv4 from 'uuid/v4';
+import jwt from 'jsonwebtoken';
+import Cart from '../../models/Cart';
+import Order from '../../models/Order';
 import calculateCartTotal from '../../utils/calculateCartTotal';
 
 
@@ -10,7 +10,8 @@ const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
 
 
 export default async (req, res) => {
-    const { paymentData } = req.body
+    const { paymentData } = req.body;
+
     try {
         // 1. Verify and get user id from token
         const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET)
@@ -19,7 +20,7 @@ export default async (req, res) => {
         // 2. Find the acrt based on user id, populate it
         const cart = Cart.findOne({ user: userId }).populate({
             path: "products.product",
-            model: "product"
+            model: "Product"
 
         })
 
@@ -32,8 +33,7 @@ export default async (req, res) => {
         const prevCustomer = await stripe.customers.list({
             email: paymentData.email,
             limit: 1
-
-        })
+        });
         const isExistingCustomer = prevCustomer.data.length > 0;
 
         // 5. if not existeng costumer, create them base on their email
@@ -54,9 +54,10 @@ export default async (req, res) => {
             customer,
             description: `Checkout | ${paymentData.email} | ${paymentData.id}`
         }, {
-            idempotency_key: uuidv4()
-        })
 
+            idempotency_key: uuidv4()
+        }
+        );
 
         // 7. add order data to database
         await new Order({
@@ -72,16 +73,14 @@ export default async (req, res) => {
             { _id: cart._id },
             { $set: { products: [] } }
         )
-
-
-
         // 9. send back success (200 ) response
         res.status(200).send("checkout successful")
 
 
 
     } catch (error) {
-        res.status(500).send('error processing charge')
+
+        res.status(500).send('Error processing charge')
     }
 }
 

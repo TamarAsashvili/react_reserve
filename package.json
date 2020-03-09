@@ -27,7 +27,11 @@
     "semantic-ui-react": "^0.87.3",
     "shortid": "^2.2.15",
     "stripe": "^7.5.0",
-    "uuid": "^3.3.2",
+    "uuid": "^3.4.0",
+    "uuidv4": "^6.0.6",
     "validator": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^7.0.0"
   }
 }

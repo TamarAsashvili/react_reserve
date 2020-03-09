@@ -3,6 +3,7 @@ import StripeCheckout from 'react-stripe-checkout'
 import { Divider, Segment, Button } from 'semantic-ui-react';
 import calculateCartTotal from '../../utils/calculateCartTotal';
 
+
 function CartSummary({ products, handleCheckout, success }) {
   const [cartAmount, setCartAmount] = React.useState(0)
   const [stripeAmount, setStripeAmount] = React.useState(0)
@@ -23,7 +24,8 @@ function CartSummary({ products, handleCheckout, success }) {
     <Segment clearing size='large'>
 
       <strong > Sub total:</strong> ${cartAmount}
-      <StripeCheckout name="React Reserve"
+      <StripeCheckout
+        name="React Reserve"
         amount={stripeAmount}
         image={products.length > 0 ? products[0].product.mediaUrl : ""}
         currency="USD"
