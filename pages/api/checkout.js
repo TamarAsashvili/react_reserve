@@ -59,15 +59,24 @@ export default async (req, res) => {
 
 
         // 7. add order data to database
-
+        await new Order({
+            user: userId,
+            email: paymentData.email,
+            total: cartTotal,
+            products: cart.products
+        }).save()
 
 
         // 8. Clear products in cart
+        await Cart.findOneAndUpdate(
+            { _id: cart._id },
+            { $set: { products: [] } }
+        )
 
 
 
         // 9. send back success (200 ) response
-
+        res.status(200).send("checkout successful")
 
 
 

@@ -26,7 +26,7 @@ function CartSummary({ products, handleCheckout, success }) {
       <StripeCheckout name="React Reserve"
         amount={stripeAmount}
         image={products.length > 0 ? products[0].product.mediaUrl : ""}
-        currency="usd"
+        currency="USD"
         shippingAddress={true}
         billingAddress={true}
         zipCode={true}
