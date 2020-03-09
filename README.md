@@ -14,3 +14,7 @@
 :eyes:
 :revolving_hearts:
 :eyes:
+
+I used:
+stripe.com to save image
+cloudinary.com  developer tools
