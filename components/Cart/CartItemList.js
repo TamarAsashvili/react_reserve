@@ -1,20 +1,24 @@
-import { Header, Segment, Button, Icon } from 'semantic-ui-react'
+import { Header, Segment, Button, Icon, Item } from 'semantic-ui-react';
+import { useRouter } from 'next/router'
 
-function CartItemList() {
-  const user = false;
-
+function CartItemList({ products, user }) {
+  const router = useRouter()
   return (
-
     <Segment secondary color='teal' inverted textAlign='center' placeholder>
       <Header icon>
         <Icon name='shopping basket' />
         No products in you cart. Add some!
       </Header>
       <div>
-        {user ? (<Button color='orange'>View Products</Button>) : (<Button color='blue'>Login to add Products</Button>)}
+        {user ? (<Button onClick={() => router.push('/')} color='orange'>View Products</Button>
+        ) : (
+            <Button color='blue' onClick={() => router.push('/login')}>Login to add Products</Button>)}
       </div>
     </Segment>
   )
+
+
+
 }
 
 export default CartItemList;

@@ -7,11 +7,12 @@ import baseUrl from '../utils/baseUrl'
 
 
 
-function Cart({ products }) {
+function Cart({ products, user }) {
+
   console.log(products)
   return (
     <Segment>
-      <CartItemList />
+      <CartItemList user={user} products={products} />
       <CartSummary />
     </Segment>
   )

@@ -4,8 +4,8 @@ function CartSummary() {
   return <>
     <Divider />
     <Segment clearing size='large'>
-      <strong > Sub TOTAL:</strong> $0.00
-      
+      <strong > Sub Total:</strong> $0.00
+
 <Button icon='cart' color='teal' floated='right' content='checkout' />
     </Segment>
   </>;

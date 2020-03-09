@@ -19,7 +19,8 @@ class MyApp extends App {
     }
 
     if (!token) {
-      const isProtectedRoute = ctx.pathname === '/account' || ctx.pathname === '/create'
+      const isProtectedRoute = ctx.pathname === '/account' || ctx.pathname === '/create';
+
       if (isProtectedRoute) {
         redirectUser(ctx, '/login')
       }

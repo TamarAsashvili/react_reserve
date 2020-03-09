@@ -11,6 +11,7 @@ Router.onRouteChangeError = () => NProgress.done();
 
 
 function Header({ user }) {
+
   const router = useRouter();
   const isRoot = user && user.role === 'root'
   const isAdmin = user && user.role === 'admin'

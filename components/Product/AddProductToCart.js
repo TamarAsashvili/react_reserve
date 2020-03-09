@@ -12,7 +12,7 @@ function AddProductToCart({ user, productId }) {
   const [quantity, setQuantity] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   React.useEffect(() => {
     let timeout;
@@ -47,10 +47,10 @@ function AddProductToCart({ user, productId }) {
   return (
     <Input
       value={quantity}
-      onChange={event => setQuantity(Number(event.target.value))}
-      type='number' min='1'
+      type='number'
+      min='1'
       placeholder='Quantity'
-
+      onChange={event => setQuantity(Number(event.target.value))}
 
       action={
         user && success ? {
@@ -64,7 +64,7 @@ function AddProductToCart({ user, productId }) {
             color: 'orange',
             content: 'Add To Cart',
             icon: 'plus cart',
-            loading: loading,
+            loading,
             disabled: loading,
             onClick: handleAddProductToCart
           } : {

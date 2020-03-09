@@ -3,8 +3,9 @@ import jwt from 'jsonwebtoken'
 import Cart from '../../models/Cart'
 import connectDb from '../../utils/connectDb'
 
-connectDb()
-const { ObjectId } = mongoose.Types
+connectDb();
+
+const { ObjectId } = mongoose.Types;
 
 export default async (req, res) => {
     switch (req.method) {
@@ -26,11 +27,13 @@ async function handleGetRequest(req, res) {
         return res.status(401).send('No autorization token')
     }
     try {
-        const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET)
+        const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
+
         const cart = await Cart.findOne({ user: userId }).populate({
             path: "products.product",
             model: "Product"
-        })
+        });
+
         res.status(200).json(cart.products)
     } catch (error) {
         console.log(error)
@@ -40,17 +43,17 @@ async function handleGetRequest(req, res) {
 
 
 async function handlePutRequest(req, res) {
-    const { quantity, productId } = req.body
+    const { quantity, productId } = req.body;
     if (!("authorization" in req.headers)) {
-        return res.status(401).send('No autorization token')
+        return res.status(401).send('No authorization token')
     }
 
     try {
         const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
-        //Get user cart base on user id
+        // Get user cart based on user id
 
         const cart = await Cart.findOne({ user: userId })
-        //check if product olready exists in cart
+        // check if product olready exists in cart
         const productExists = cart.products.some(doc => ObjectId(productId).equals(doc.product))
         // if so, incriment cuantity (by number of provided request)
 
@@ -60,7 +63,7 @@ async function handlePutRequest(req, res) {
                 { $inc: { "products.$.quantity": quantity } }
             )
         } else {
-            //if not, add new product with given quantity
+            // if not, add new product with given quantity
             const newProduct = { quantity, product: productId }
             await Cart.findOneAndUpdate(
                 { _id: cart._id },
