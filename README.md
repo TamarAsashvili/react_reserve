@@ -16,5 +16,5 @@
 :eyes:
 
 I used:
-stripe.com to save image
-cloudinary.com  developer tools
+1) www.stripe.com to save image
+2) www.cloudinary.com  developer tools
